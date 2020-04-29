@@ -1,0 +1,25 @@
+.cadastro-nao-conformidades-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .field-required {
+        color: red;
+        font-weight: 700;
+    }
+
+    .btn-group {
+        margin-bottom: 10px;
+        button:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .btn-group {
+            margin-bottom: 10px;
+            button:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
