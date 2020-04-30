@@ -28,8 +28,6 @@ function CadastroNaoConformidades({ location, history }) {
         }
     }, [location]);
 
-    useEffect(() => console.log(naoConformidade), [naoConformidade]);
-
     const initFetch = async () => {
         await fetchDepartamentoOptions();
         setLoading(false);

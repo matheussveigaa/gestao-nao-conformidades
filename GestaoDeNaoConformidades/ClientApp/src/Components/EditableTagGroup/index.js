@@ -4,17 +4,32 @@ import './index.scss';
 
 const { Option } = Select;
 
-function EditableTagGroup({ addTagTitle = 'Nova tag', initialTags = [], groupTitle, options = [], onAddTag, onRemoveTag, readOnly = false, tagKey }) {
+function EditableTagGroup({ 
+    addTagTitle = 'Nova tag', 
+    initialTags = [], 
+    groupTitle, 
+    options, 
+    onAddTag, 
+    onRemoveTag, 
+    readOnly = false, 
+    tagKey,
+    tagDescription
+}) {
     const [inputVisible, setInputVisible] = useState(false);
     const [tags, setTags] = useState([]);
 
     const inputRef = useRef(null);
 
-    useEffect(() => console.log('tags', tags), [tags]);
-
     useEffect(() => {
-        if(initialTags && initialTags.length > 0 && options.length > 0) {
-            let tags = options.filter(opt => initialTags.findIndex(t => t[tagKey] == opt.key) > -1);
+        if(initialTags.length > 0) {
+            let tags = [];
+            if(options && options.length > 0) {
+                tags = options.filter(opt => initialTags.findIndex(t => t[tagKey] == opt.key) > -1);
+            } else {
+                if(tagKey && tagDescription) {
+                    tags = initialTags.map(tag => ({key: tag[tagKey], description: tag[tagDescription]}));
+                }
+            }
 
             setTags(tags);
         }

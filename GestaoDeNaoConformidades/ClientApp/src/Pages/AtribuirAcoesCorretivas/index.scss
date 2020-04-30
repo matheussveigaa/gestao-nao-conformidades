@@ -1,4 +1,24 @@
 .atribuir-acoes-corretivas-wrapper {
     padding-left: 10px;
     padding-right: 10px;
+    .ant-descriptions-title {
+        color: #1890ff !important;
+        font-weight: 500 !important;
+    }
+
+    .btn-group {
+        margin-bottom: 10px;
+        button:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .btn-group {
+            margin-bottom: 10px;
+            button:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }
