@@ -15,6 +15,10 @@ class AcaoCorretivaService extends BaseRequest{
     salvarAcaoCorretiva(data) {
         return this.call({ method: 'POST', url: `${BASE_URL}`, data });
     }
+
+    atualizarAcaoCorretiva(data) {
+        return this.call({ method: 'PUT', url: `${BASE_URL}`, data });
+    }
 }
 
 export default new AcaoCorretivaService();

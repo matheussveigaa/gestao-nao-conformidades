@@ -5,15 +5,29 @@ import moment from 'moment';
 
 const { TextArea } = Input;
 
-function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
+function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel, readOnly = false }) {
 
     const [internalAcaoCorretiva, setInternalAcaoCorretiva] = useState({});
 
-    const modalTitle = useMemo(() => acaoCorretiva ? `Atualizando ação corretiva ${acaoCorretiva.acaoCorretivaID}` : 'Cadastrando ação corretiva', [acaoCorretiva]);
+    const modalTitle = useMemo(() => {
+        if(!acaoCorretiva) {
+            return 'Cadastrando ação corretiva';
+        }
+        
+        if(acaoCorretiva && acaoCorretiva.acaoCorretivaID && !readOnly) {
+            return `Editando ação corretiva ${acaoCorretiva.acaoCorretivaID}`;
+        } else {
+            return `Visualizando ação corretiva ${acaoCorretiva.acaoCorretivaID}`;
+        }
+    }, [acaoCorretiva]);
+
+    const okButtonProps = useMemo(() => readOnly && ({ style: { display: 'none' } }), [readOnly]);
 
     useEffect(() => {
         if(acaoCorretiva)
-            setInternalAcaoCorretiva(acaoCorretiva);
+            setInternalAcaoCorretiva(acaoCorretiva)
+        else
+            setInternalAcaoCorretiva({});
     }, [acaoCorretiva]);
 
     const onOkInternal = useCallback(() => {
@@ -44,6 +58,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
             okText="Salvar"
             cancelText="Cancelar"
             width="120vh"
+            okButtonProps={okButtonProps}
         >
             <div className="acao-corretiva-modal-wrapper">
                 <Row style={{marginBottom: 10}}>
@@ -59,6 +74,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
                                 value={internalAcaoCorretiva.ateQuando && moment(internalAcaoCorretiva.ateQuando)}
                                 onChange={onChangeDate}
                                 format='DD/MM/YYYY'
+                                disabled={readOnly}
                             />
                         </Row>
                     </Col>
@@ -73,6 +89,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
                             rows={10}
                             value={internalAcaoCorretiva.oqueFazer}
                             onChange={onChange}
+                            disabled={readOnly}
                         />
                     </Col>
                     <Col xs={24} sm={24} md={11} xxl={11}>
@@ -84,6 +101,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
                             rows={10}
                             value={internalAcaoCorretiva.porqueFazer}
                             onChange={onChange}
+                            disabled={readOnly}
                         />
                     </Col>
                 </Row>
@@ -97,6 +115,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
                             rows={10}
                             value={internalAcaoCorretiva.comoFazer}
                             onChange={onChange}
+                            disabled={readOnly}
                         />
                     </Col>
                     <Col xs={24} sm={24} md={11} xxl={11}>
@@ -108,6 +127,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel }) {
                             rows={10}
                             value={internalAcaoCorretiva.ondeFazer}
                             onChange={onChange}
+                            disabled={readOnly}
                         />
                     </Col>
                 </Row>

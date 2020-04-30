@@ -16,6 +16,7 @@ function AtribuirAcoesCorretivas({ location, history }) {
     const [apresentarModalAcaoCorretiva, setApresentarModalAcaoCorretiva] = useState(false);
     const [acaoCorretivaSelecionada, setAcaoCorretivaSelecionada] = useState('');
     const [tableLoading, setTableLoading] = useState(false);
+    const [podeEditarAcaoCorretiva, setPodeEditarAcaoCorretiva] = useState(false);
 
     const columns = useMemo(() => {
         const columns = [
@@ -45,11 +46,11 @@ function AtribuirAcoesCorretivas({ location, history }) {
                 key: 'action',
                 render: (text, record) => (
                     <span>
-                        <a>
+                        <a onClick={visualizarAcaoCorretiva(record)}>
                             Visualizar ação
                         </a>
                         <Divider type="vertical" />
-                        <a>
+                        <a onClick={editarAcaoCorretiva(record)}>
                             Editar ação
                         </a>
                     </span>
@@ -89,7 +90,9 @@ function AtribuirAcoesCorretivas({ location, history }) {
         }
     }, [naoConformidade]);
 
-    const showModalAcaoCorretiva = () => {
+    const inserirAcaoCorretiva = () => {
+        setPodeEditarAcaoCorretiva(true);
+        setAcaoCorretivaSelecionada(null);
         setApresentarModalAcaoCorretiva(true);
     };
 
@@ -98,13 +101,35 @@ function AtribuirAcoesCorretivas({ location, history }) {
         setAcaoCorretivaSelecionada('');
     };
 
+    const visualizarAcaoCorretiva = acao => event => {
+        event.preventDefault();
+
+        setPodeEditarAcaoCorretiva(false);
+        setAcaoCorretivaSelecionada(acao);
+        setApresentarModalAcaoCorretiva(true);
+    };
+
+    const editarAcaoCorretiva = acao => event => {
+        event.preventDefault();
+
+        setPodeEditarAcaoCorretiva(true);
+        setAcaoCorretivaSelecionada(acao);
+        setApresentarModalAcaoCorretiva(true);
+    };
+
     const onOkModalAcaoCorretiva = useCallback(async acaoCorretiva => {
         try {
-            message.loading({ content: 'Registrando ação corretiva...', duration: 10000});
+            let successMessage = acaoCorretiva.acaoCorretivaID ? 'Ação corretiva atualizada com sucesso.' : 'Ação corretiva cadastrada com sucesso.';
 
-            await AcaoCorretivaService.salvarAcaoCorretiva({ ...acaoCorretiva, naoConformidadeID: naoConformidade.naoConformidadeID});
+            message.loading({ content: 'Registrando ação corretiva...', duration: 10000 });
 
-            MessageUtils.swalSuccess('Ação corretiva cadastrada com sucesso.');
+            if(acaoCorretiva.acaoCorretivaID) {
+                await AcaoCorretivaService.atualizarAcaoCorretiva({ ...acaoCorretiva });
+            } else {
+                await AcaoCorretivaService.salvarAcaoCorretiva({ ...acaoCorretiva, naoConformidadeID: naoConformidade.naoConformidadeID});
+            }
+
+            MessageUtils.swalSuccess(successMessage);
 
             setApresentarModalAcaoCorretiva(false);
         } catch(error) {
@@ -126,6 +151,7 @@ function AtribuirAcoesCorretivas({ location, history }) {
                 onCancel={onCancelModalAcaoCorretiva}
                 visible={apresentarModalAcaoCorretiva}
                 acaoCorretiva={acaoCorretivaSelecionada}
+                readOnly={!podeEditarAcaoCorretiva}
             />
             <Skeleton active loading={loading} paragraph={{rows: 10}}>
                 <Row className="btn-group">
@@ -133,7 +159,7 @@ function AtribuirAcoesCorretivas({ location, history }) {
                         <Button onClick={voltarParaListagem} icon="step-backward"/>
                     </Tooltip>
                     <Button 
-                        onClick={showModalAcaoCorretiva} 
+                        onClick={inserirAcaoCorretiva} 
                         type="primary" 
                         icon="plus"
                     >

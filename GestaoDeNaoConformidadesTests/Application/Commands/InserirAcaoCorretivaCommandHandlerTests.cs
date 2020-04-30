@@ -31,7 +31,7 @@ namespace GestaoDeNaoConformidadesTests.Application.Commands
         public async Task Handler_DeveInserirAcaoCorretiva()
         {
             var ateQuando = DateTime.Now;
-            var naoConformidadeID = 1L;
+            var naoConformidadeID = 100L;
             var oqueFazer = "Formatar computador";
             var porqueFazer = "Solicitação do gerente da área";
             var comoFazer = "Ve no google como que faz";
@@ -45,7 +45,7 @@ namespace GestaoDeNaoConformidadesTests.Application.Commands
             var handler = new InserirAcaoCorretivaCommandHandler(_repository);
             await handler.Handle(command, CancellationToken.None);
 
-            _context.AcaoCorretivas.Should().HaveCount(1);
+            _context.AcaoCorretivas.Should().HaveCountGreaterOrEqualTo(1);
             var acaoCorretiva = _context.AcaoCorretivas.FirstOrDefault(a => a.NaoConformidadeID == naoConformidadeID && a.OqueFazer.Equals(oqueFazer) && a.OndeFazer.Equals(ondeFazer));
             
             acaoCorretiva.Should().NotBeNull();

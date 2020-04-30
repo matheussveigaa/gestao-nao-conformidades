@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using GestaoDeNaoConformidades.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -44,8 +45,19 @@ namespace GestaoDeNaoConformidades.Middlewares
 
             if (exception is ValidationException)
             {
-
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                json = new
+                {
+                    context.Response.StatusCode,
+                    exception.Message,
+                };
+
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(json));
+            }
+
+            if (exception is NotFoundException)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 json = new
                 {
                     context.Response.StatusCode,

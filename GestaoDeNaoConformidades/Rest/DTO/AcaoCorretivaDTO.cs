@@ -1,4 +1,6 @@
-﻿using GestaoDeNaoConformidades.Application.Commands.InserirAcaoCorretiva;
+﻿using AutoMapper;
+using GestaoDeNaoConformidades.Application.Commands.AtualizarAcaoCorretiva;
+using GestaoDeNaoConformidades.Application.Commands.InserirAcaoCorretiva;
 using GestaoDeNaoConformidades.Rest.Map;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 namespace GestaoDeNaoConformidades.Rest.DTO
 {
     [Serializable]
-    public class AcaoCorretivaDTO : IMapFrom<InserirAcaoCorretivaCommand>
+    public class AcaoCorretivaDTO : IHaveCustomMapping
     {
         public long AcaoCorretivaID { get; set; }
 
@@ -22,6 +24,13 @@ namespace GestaoDeNaoConformidades.Rest.DTO
 
         public string OndeFazer { get; set; }
 
-        public DateTime AteQuando { get; set; }
+        public DateTime? AteQuando { get; set; }
+
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<AcaoCorretivaDTO, InserirAcaoCorretivaCommand>();
+
+            configuration.CreateMap<AcaoCorretivaDTO, AtualizarAcaoCorretivaCommand>();
+        }
     }
 }

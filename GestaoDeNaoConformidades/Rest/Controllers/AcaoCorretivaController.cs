@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
+using GestaoDeNaoConformidades.Application.Commands.AtualizarAcaoCorretiva;
 using GestaoDeNaoConformidades.Application.Commands.InserirAcaoCorretiva;
 using GestaoDeNaoConformidades.Application.Queries.ObterTodasAcoesCorretivasPorNaoConformidade;
 using GestaoDeNaoConformidades.Rest.DTO;
@@ -50,6 +51,19 @@ namespace GestaoDeNaoConformidades.Rest.Controllers
             var dtos = _mapper.Map<AcaoCorretivaDTO[]>(result);
 
             return Ok(dtos);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> AtualizarAcaoCorretiva([FromBody] AcaoCorretivaDTO dto)
+        {
+            var command = _mapper.Map<AtualizarAcaoCorretivaCommand>(dto);
+            var validator = new AtualizarAcaoCorretivaCommandValidator();
+
+            validator.ValidateAndThrow(command);
+
+            await _mediator.Send(command);
+
+            return Ok();
         }
     }
 }

@@ -87,6 +87,8 @@ function CadastroNaoConformidades({ location, history }) {
             await NaoConformidadeService.inserirNaoConformidade(naoConformidadeDTO);
 
             MessageUtils.swalSuccess('Não conformidade registrada com sucesso!');
+
+            history.push(PathEnum.INDEX);
         } catch(error) {
             MessageUtils.swalError(error);
         } finally {
