@@ -122,7 +122,7 @@ function CadastroNaoConformidades({ location, history }) {
                     <Col xs={24} sm={24} md={12}>
                         <Row>
                             <label>
-                                Data ocorrencia: <span className="field-required">*</span>
+                                Data ocorrência: <span className="field-required">*</span>
                             </label>
                         </Row>
                         <Row>

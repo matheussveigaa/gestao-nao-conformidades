@@ -32,12 +32,12 @@ function AtribuirAcoesCorretivas({ location, history }) {
                 render: text => text && moment(text).format('DD/MM/YYYY')
             },
             {
-                title: 'Oque fazer',
+                title: 'O que fazer',
                 dataIndex: 'oqueFazer',
                 key: 'oqueFazer'
             },
             {
-                title: 'Porque fazer',
+                title: 'Por que fazer',
                 dataIndex: 'porqueFazer',
                 key: 'porqueFazer'
             },
@@ -132,6 +132,7 @@ function AtribuirAcoesCorretivas({ location, history }) {
             MessageUtils.swalSuccess(successMessage);
 
             setApresentarModalAcaoCorretiva(false);
+            setAcaoCorretivaSelecionada('');
         } catch(error) {
             MessageUtils.swalError(error);
         } finally {

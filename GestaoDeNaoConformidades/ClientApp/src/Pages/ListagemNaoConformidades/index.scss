@@ -1,4 +1,18 @@
 .listagem-nao-conformidades-wrapper {
     padding-left: 10px;
     padding-right: 10px;
+
+    .btn-group {
+        button:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .btn-group {
+            button:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }

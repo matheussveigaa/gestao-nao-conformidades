@@ -17,7 +17,14 @@ function Main({ children, location }) {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider breakpoint="sm" onCollapse={toggle} collapsible collapsed={collapsed}>
+            <Sider
+                width={250}
+                breakpoint="sm"
+                collapsedWidth={0}
+                onCollapse={toggle} 
+                collapsible 
+                collapsed={collapsed}
+            >
                 <div className="logo" />
                 <Menu theme="dark" mode="inline">
                     <Menu.Item key="1">
@@ -25,14 +32,14 @@ function Main({ children, location }) {
                         <span>
                             Listagem de não conformidades
                         </span>
-                        <Link to={PathEnum.INDEX}/>
+                        <Link to={PathEnum.INDEX} />
                     </Menu.Item>
                     <Menu.Item key="2">
                         <Icon type="form" />
                         <span>
                             Cadastro de não conformidades
                         </span>
-                        <Link to={PathEnum.CADASTRO_NAO_CONFORMIDADES}/>
+                        <Link to={PathEnum.CADASTRO_NAO_CONFORMIDADES} />
                     </Menu.Item>
                     {/* <Menu.Item key="2">
                         <Icon type="select" />

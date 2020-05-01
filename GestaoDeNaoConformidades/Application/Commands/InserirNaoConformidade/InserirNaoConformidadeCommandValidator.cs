@@ -11,7 +11,6 @@ namespace GestaoDeNaoConformidades.Application.Commands.InserirNaoConformidade
         public InserirNaoConformidadeCommandValidator()
         {
             RuleFor(c => c.Descricao)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage("Você deve informar uma descrição para a ocorrência.");
 

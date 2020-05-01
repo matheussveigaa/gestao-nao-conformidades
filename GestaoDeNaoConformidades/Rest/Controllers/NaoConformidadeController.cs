@@ -48,5 +48,16 @@ namespace GestaoDeNaoConformidades.Rest.Controllers
 
             return Ok(dtos);
         }
+
+        [HttpGet("por-filtro")]
+        public async Task<ActionResult<NaoConformidadeDTO[]>> ObterTodasNaoConformidadesPorDataOcorrenciaOuDescricaoOuDepartamentos([FromQuery] NaoConformidadeFiltroPorDataOcorrenciaDescricaoDepartamentosDTO dto)
+        {
+            var query = _mapper.Map<ObterTodasNaoConformidadesPorDataOcorrenciaOuDescricaoOuDepartamentosQuery>(dto);
+
+            var result = await _mediator.Send(query);
+            var dtos = _mapper.Map<NaoConformidadeDTO[]>(result);
+
+            return Ok(dtos);
+        }
     }
 }

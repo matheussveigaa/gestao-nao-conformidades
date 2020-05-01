@@ -46,10 +46,15 @@ namespace GestaoDeNaoConformidades.Middlewares
             if (exception is ValidationException)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                
+                var errors = (exception as ValidationException).Errors;
+
+                var messages = errors.Select(e => e.ErrorMessage);
+
                 json = new
                 {
                     context.Response.StatusCode,
-                    exception.Message,
+                    Message = string.Join("<br/>", messages),
                 };
 
                 return context.Response.WriteAsync(JsonConvert.SerializeObject(json));

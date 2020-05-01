@@ -16,6 +16,7 @@ namespace GestaoDeNaoConformidades.Application.Commands.InserirAcaoCorretiva
 
             RuleFor(c => c.AteQuando)
                 .NotNull()
+                .WithMessage("A data para a ação deve ser preenchida.")
                 .GreaterThan(DateTime.MinValue)
                 .WithMessage("A data para a ação deve ser preenchida.");
 
@@ -31,13 +32,13 @@ namespace GestaoDeNaoConformidades.Application.Commands.InserirAcaoCorretiva
 
             RuleFor(c => c.OqueFazer)
                 .NotEmpty()
-                .WithMessage("Oque fazer deve ser preenchido.")
+                .WithMessage("O que fazer deve ser preenchido.")
                 .MaximumLength(50)
-                .WithMessage("Oque fazer não pode ser maior que 50 caracteres.");
+                .WithMessage("O que fazer não pode ser maior que 50 caracteres.");
 
             RuleFor(c => c.PorqueFazer)
                 .NotEmpty()
-                .WithMessage("Porque fazer deve ser preenchido.");
+                .WithMessage("Por que fazer deve ser preenchido.");
 
         }
     }

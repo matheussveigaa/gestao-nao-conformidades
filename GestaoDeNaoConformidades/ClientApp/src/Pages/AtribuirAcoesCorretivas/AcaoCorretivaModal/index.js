@@ -82,7 +82,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel, readOnly =
                 <Row style={{marginBottom: 10}}>
                     <Col xs={24} sm={24} md={11} xxl={11} style={{marginRight: '9vh'}}>
                         <label>
-                            Descreva oque fazer: <span className="field-required">*</span>
+                            Descreva o que fazer: <span className="field-required">*</span>
                         </label>
                         <TextArea
                             id="oqueFazer"
@@ -94,7 +94,7 @@ function AcaoCorretivaModal({ acaoCorretiva, visible, onOk, onCancel, readOnly =
                     </Col>
                     <Col xs={24} sm={24} md={11} xxl={11}>
                         <label>
-                            Descreva porque fazer: <span className="field-required">*</span>
+                            Descreva por que fazer: <span className="field-required">*</span>
                         </label>
                         <TextArea
                             id="porqueFazer"

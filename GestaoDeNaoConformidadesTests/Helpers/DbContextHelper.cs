@@ -11,7 +11,7 @@ namespace GestaoDeNaoConformidadesTests.Helpers
         public static GestaoNaoConformidadesDbContext CreateContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<GestaoNaoConformidadesDbContext>();
-            optionsBuilder.UseInMemoryDatabase("teste");
+            optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
             var context = new GestaoNaoConformidadesDbContext(optionsBuilder.Options);
 
             return context;
