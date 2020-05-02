@@ -37,7 +37,7 @@ namespace GestaoDeNaoConformidades.Application.Queries.ObterTodasNaoConformidade
 
             if(request.DataOcorrencia.HasValue)
             {
-                naoConformidades = naoConformidades.Where(nc => nc.DataOcorrencia.Date == request.DataOcorrencia)
+                naoConformidades = naoConformidades.Where(nc => nc.DataOcorrencia.Date == request.DataOcorrencia?.Date)
                                                    .ToArray();
             }
 

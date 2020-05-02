@@ -16,13 +16,11 @@ function Main({ children, location }) {
     }, [collapsed]);
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: '100vh' }}>
             <Sider
-                width={250}
                 breakpoint="sm"
-                collapsedWidth={0}
-                onCollapse={toggle} 
-                collapsible 
+                onCollapse={toggle}
+                collapsible
                 collapsed={collapsed}
             >
                 <div className="logo" />
@@ -41,30 +39,13 @@ function Main({ children, location }) {
                         </span>
                         <Link to={PathEnum.CADASTRO_NAO_CONFORMIDADES} />
                     </Menu.Item>
-                    {/* <Menu.Item key="2">
-                        <Icon type="select" />
-                        <span>
-                            Atribuir ações corretivas
-                        </span>
-                        <Link to={PathEnum.ATRIBUIR_ACOES_CORRETIVAS}/>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="upload" />
-                        <span>nav 3</span>
-                    </Menu.Item> */}
                 </Menu>
             </Sider>
             <Layout>
                 <Header style={{ padding: 0 }}>
                 </Header>
                 <Content
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        background: '#fff',
-                        minHeight: 280,
-                        boxShadow: '0 0 5px rgba(0,0,0,.1)'
-                    }}
+                    className="content-main"
                 >
                     <div className="page-title">
                         <h2>

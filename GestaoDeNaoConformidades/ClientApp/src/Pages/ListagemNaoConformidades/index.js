@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import './index.scss';
-import { Skeleton, Card, Row, Col, DatePicker, Table, Divider, Tag, Input, Select, Button } from 'antd';
-import MessageUtils from '../../Utils/MessageUtils';
-import NaoConformidadeService from '../../Services/NaoConformidadeService';
+import { Card, Divider, Skeleton, Table, Tag } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PathEnum from '../../Enums/PathEnum';
 import DepartamentoService from '../../Services/DepartamentoService';
-import moment from 'moment';
-
-const { Option } = Select;
+import NaoConformidadeService from '../../Services/NaoConformidadeService';
+import MessageUtils from '../../Utils/MessageUtils';
+import './index.scss';
+import ListagemNaoConformidadesFiltros from './ListagemNaoConformidadesFiltros';
 
 const columns = [
     {
@@ -100,7 +98,7 @@ function ListagemNaoConformidades(props) {
     };
     
     const onChangeDate = useCallback((dateAsMoment, dateAsString) => {
-        let newFiltros = { ...filtros, dataOcorrencia: dateAsMoment.toDate().toDateString()};
+        let newFiltros = { ...filtros, dataOcorrencia: dateAsMoment ? dateAsMoment.toDate().toDateString() : ''};
         setFiltros(newFiltros);
     }, [filtros]);
 
@@ -149,87 +147,15 @@ function ListagemNaoConformidades(props) {
 
     return (
         <div className="listagem-nao-conformidades-wrapper">
-            <Card title="Filtros" style={{marginBottom: 10}}>
-                <Row type="flex" justify="space-between" style={{marginBottom: 10}}>
-                    <Col 
-                        xs={24} 
-                        sm={24} 
-                        md={7} 
-                        lg={7} 
-                        xxl={7}
-                    >
-                        <Row>
-                            <label>
-                                Data ocorrência:
-                            </label>
-                        </Row>
-                        <Row>
-                            <DatePicker
-                                disabledTime
-                                style={{width: '100%'}}
-                                value={filtros.dataOcorrencia && moment(filtros.dataOcorrencia)}
-                                onChange={onChangeDate}
-                                format='DD/MM/YYYY'
-                            />
-                        </Row>
-                    </Col>
-                    <Col 
-                        xs={24} 
-                        sm={24} 
-                        md={7} 
-                        lg={7} 
-                        xxl={7}
-                    >
-                        <Row>
-                            <label>
-                                Ocorrência:
-                            </label>
-                        </Row>
-                        <Row>
-                            <Input
-                                id="descricao"
-                                value={filtros.descricao}
-                                onChange={onChange}
-                            />
-                        </Row>
-                    </Col>
-                    <Col 
-                        xs={24} 
-                        sm={24} 
-                        md={7} 
-                        lg={7} 
-                        xxl={7}
-                    >
-                        <Row>
-                            <label>
-                                Departamentos:
-                            </label>
-                        </Row>
-                        <Row>
-                            <Select 
-                                onChange={onChangeSelect}
-                                style={{width: '100%'}}
-                                mode="multiple"
-                                value={filtros.departamentos}
-                            > 
-                                {departamentoOptions.length > 0 && departamentoOptions.map(departamento => 
-                                    <Option key={departamento.departamentoID}>
-                                        {departamento.nome}
-                                    </Option>    
-                                )}
-                            </Select>
-                        </Row>
-                    </Col>
-                </Row>
-                <Row type="flex" className="btn-group">
-                    <Button type="primary" onClick={aplicarFiltros}>
-                        Aplicar filtros
-                    </Button>
-                    <Button onClick={limparFiltros}>
-                        Limpar filtros
-                    </Button>
-                </Row>
-            </Card>
+            <ListagemNaoConformidadesFiltros
+                departamentoOptions={departamentoOptions}
+                filtros={filtros}
+                onChange={onChange}
+                onChangeDate={onChangeDate}
+                onChangeSelect={onChangeSelect}
+                aplicarFiltros={aplicarFiltros}
+                limparFiltros={limparFiltros}
+            />
             <Skeleton active loading={loading} paragraph={{ rows: 10 }}>
                 <Card>
                     <Table
