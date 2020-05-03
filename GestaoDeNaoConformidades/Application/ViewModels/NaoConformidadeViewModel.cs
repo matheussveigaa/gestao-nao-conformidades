@@ -22,8 +22,10 @@ namespace GestaoDeNaoConformidades.Application.ViewModels
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<NaoConformidade, NaoConformidadeViewModel>()
-                        .ForMember(d => d.Departamentos, opt => opt.MapFrom(src => src.NaoConformidadeDepartamentos.Select(nd => new DepartamentoViewModel { DepartamentoID = nd.DepartamentoID, Nome = nd.Departamento.Nome })));
+                        .ForMember(d => d.Departamentos, opt => opt.MapFrom(src => src.NaoConformidadeDepartamentos.Select(MapearDepartamentos)));
             configuration.CreateMap<NaoConformidadeViewModel, NaoConformidadeDTO>();
         }
+
+        private DepartamentoViewModel MapearDepartamentos(NaoConformidadeDepartamento nd) => new DepartamentoViewModel { DepartamentoID = nd.DepartamentoID, Nome = nd.Departamento.Nome };
     }
 }
